@@ -1,12 +1,13 @@
-# Calcverse — Smart Calculator Hub
+# Zentical — Smart Calculator Hub
 
 A production-ready, **offline-first** Android calculator suite bundling **55 calculators** across
 5 categories, plus a full scientific calculator. Built in **Java** with **MVVM + Clean
 Architecture**, **Material Design 3**, **Room**, **ViewBinding**, **Navigation Component**, and a
 dark/light/system theme engine. Minimum **Android 10 (API 29)**.
 
-> Originally specified as "Smart Calculator Hub." Published under the name **Calcverse**
-> (`com.calcverse.app`) to avoid a name clash on Google Play.
+> Originally specified as "Smart Calculator Hub." Published under the name **Zentical**
+> (Play Store applicationId and Java namespace `com.zentical.app`)
+> to avoid a name clash on Google Play.
 
 ---
 
@@ -41,7 +42,7 @@ Single-activity, data-driven MVVM. See [`docs/ARCHITECTURE.md`](docs/ARCHITECTUR
 [`docs/FEATURE_FLOW.md`](docs/FEATURE_FLOW.md) for diagrams.
 
 ```
-com.calcverse.app
+com.zentical.app
 ├── domain            # Pure business logic — no Android deps, fully unit-tested
 │   ├── model         #   CalculatorSpec, InputField, InputValues, CalcResult, Computation
 │   └── calc          #   *Calculators (Finance/Health/Date/Utility/Engineering),
@@ -93,7 +94,7 @@ Create `keystore.properties` (git-ignored) and reference it in `app/build.gradle
 
 ## Play Store checklist
 
-- [ ] Replace AdMob test IDs in `app/build.gradle` (`admobAppId`, banner/interstitial unit IDs)
+- [x] AdMob real IDs wired into the `release` build type (banner, interstitial, App Open); debug keeps Google test IDs
 - [ ] Add real Firebase `google-services.json` and enable Analytics/Crashlytics (see
       [`docs/FIREBASE_SETUP.md`](docs/FIREBASE_SETUP.md))
 - [ ] Configure release signing

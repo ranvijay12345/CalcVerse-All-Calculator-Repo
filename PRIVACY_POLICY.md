@@ -1,8 +1,8 @@
-# Calcverse Privacy Policy
+# Zentical Privacy Policy
 
 _Last updated: 29 August 2026_
 
-Calcverse ("the app") is designed to work entirely offline. All calculations run on your device
+Zentical ("the app") is designed to work entirely offline. All calculations run on your device
 and are never transmitted to us.
 
 ## 1. Data we store
@@ -31,13 +31,13 @@ is disabled, no analytics or crash data leaves your device.
 ## 5. Permissions
 
 - **Microphone** — used only for optional voice input, processed by your device's speech
-  recognizer. Audio is not stored or uploaded by Calcverse.
+  recognizer. Audio is not stored or uploaded by Zentical.
 - **Internet / Network state** — used only for advertising and the in-app review prompt. The
   calculators themselves never require a network connection.
 
 ## 6. Children
 
-Calcverse does not knowingly collect data from children under 13.
+Zentical does not knowingly collect data from children under 13.
 
 ## 7. Changes
 
@@ -46,6 +46,6 @@ in the in-app copy (Settings → Privacy policy).
 
 ## 8. Contact
 
-Questions? Reach us through the app's listing on Google Play.
+Questions or concerns about this policy or your data? Email us at ranviapp@gmail.com and we'll be happy to help.
 
-By using Calcverse you agree to this policy.
+By using Zentical you agree to this policy.

@@ -1,7 +1,7 @@
-# Publishing Calcverse to the Google Play Store
+# Publishing Zentical to the Google Play Store
 
 A complete, start-to-finish guide for shipping this app. Follow the phases in order.
-Everything here is specific to **this** project (package `com.calcverse.app`).
+Everything here is specific to **this** project (package `com.zentical.app`).
 
 > **Estimated time:** ~3–4 hours of active work the first time, then Google review
 > takes anywhere from a few hours to ~7 days for a brand-new app/account.
@@ -14,7 +14,7 @@ Everything here is specific to **this** project (package `com.calcverse.app`).
 |---|---|
 | **Google Play Developer account** | One-time **$25 USD** fee. Sign up at <https://play.google.com/console>. New personal accounts must also complete ID + (sometimes) address verification, which can take a couple of days — do this first. |
 | **Android Studio** (latest stable) | Needed to build the signed release bundle. Download: <https://developer.android.com/studio> |
-| **A real AdMob account** | Free. <https://admob.google.com>. Required to replace the test ad IDs (Phase 2). |
+| **A real AdMob account** | Free. <https://admob.google.com>. Real ad IDs are already wired into the release build (Phase 2) — you just confirm they're yours and link the AdMob app to the package. |
 | **A public URL for the privacy policy** | Play requires a publicly reachable privacy-policy link (Phase 6). |
 | **Store graphics** | App icon (already in project), a 1024×500 feature graphic, and 2–8 screenshots (Phase 5). |
 
@@ -26,7 +26,7 @@ Everything here is specific to **this** project (package `com.calcverse.app`).
    `D:\AI-Projects\Smart-Calculator_Hub`.
 2. Wait for **Gradle sync** to finish (it downloads all dependencies, including
    MPAndroidChart from JitPack). Fix any SDK-location prompt by installing
-   **Android SDK Platform 34** via *Tools → SDK Manager*.
+   **Android SDK Platform 36** via *Tools → SDK Manager*.
 3. Run the unit tests to confirm the calculator engine is healthy:
    - Terminal: `./gradlew :app:testDebugUnitTest`
    - These must pass: EMI/GST/Simple-Interest, BMI, and the Scientific engine tests.
@@ -35,37 +35,34 @@ Everything here is specific to **this** project (package `com.calcverse.app`).
 
 ---
 
-## Phase 2 — Replace the AdMob TEST IDs with your real IDs ⚠️ REQUIRED
+## Phase 2 — AdMob IDs (real IDs already configured) ✅
 
-The project currently ships **Google's public test ad units**. Publishing with test
-IDs violates AdMob policy and earns **$0**. You must replace them.
+The **release** build type in `app/build.gradle` already ships your **real** AdMob IDs;
+the **debug** build type keeps Google's public **test** IDs so you can develop safely.
+There is nothing to replace for the first launch — just verify the values are yours.
 
-1. In the [AdMob console](https://admob.google.com):
-   - **Apps → Add app → Android**, register `com.calcverse.app`.
-   - Copy the **App ID** (looks like `ca-app-pub-XXXXXXXXXXXXXXXX~YYYYYYYYYY`).
-   - Create two **ad units**: one **Banner**, one **Interstitial**. Copy each unit ID
-     (looks like `ca-app-pub-XXXXXXXXXXXXXXXX/ZZZZZZZZZZ`).
+Current release IDs (`app/build.gradle` → `buildTypes.release`):
 
-2. Open **`app/build.gradle`** and edit `defaultConfig` (around **lines 26–29**):
+```groovy
+manifestPlaceholders = [admobAppId: "ca-app-pub-5753738385448226~8014030382"]
+resValue "string", "admob_banner_unit_id",       "ca-app-pub-5753738385448226/4013302122"
+resValue "string", "admob_interstitial_unit_id", "ca-app-pub-5753738385448226/9537091543"
+resValue "string", "admob_app_open_unit_id",     "ca-app-pub-5753738385448226/6700948714"
+```
 
-   ```groovy
-   // BEFORE (test IDs):
-   manifestPlaceholders = [admobAppId: "ca-app-pub-3940256099942544~3347511713"]
-   resValue "string", "admob_banner_unit_id",       "ca-app-pub-3940256099942544/6300978111"
-   resValue "string", "admob_interstitial_unit_id", "ca-app-pub-3940256099942544/1033173712"
+- The app serves **three** ad formats: banner, interstitial, and **App Open** (shown on
+  warm returns to the foreground — see `util/AppOpenAdManager.java`).
+- Debug builds use test IDs (`ca-app-pub-3940256099942544/...`) for all three, so you can
+  tap freely without risking an invalid-traffic strike.
+- In the AdMob console, make sure the app whose App ID is `~8014030382` is **linked to
+  package `com.zentical.app`**, and that all three ad units exist under it.
 
-   // AFTER (your real IDs):
-   manifestPlaceholders = [admobAppId: "ca-app-pub-XXXXXXXXXXXXXXXX~YYYYYYYYYY"]
-   resValue "string", "admob_banner_unit_id",       "ca-app-pub-XXXXXXXXXXXXXXXX/AAAAAAAAAA"
-   resValue "string", "admob_interstitial_unit_id", "ca-app-pub-XXXXXXXXXXXXXXXX/BBBBBBBBBB"
-   ```
+> Don't add these strings to `strings.xml` — they're generated here via `resValue`.
+> Adding them elsewhere causes a duplicate-resource build error.
 
-   > Don't add these three strings to `strings.xml` — they're generated here via
-   > `resValue`. Adding them elsewhere causes a duplicate-resource build error.
-
-3. **Ads consent (recommended):** if you'll have EU/UK/other-region users, set up a
-   consent form in AdMob (**Privacy & messaging → GDPR / US states**) so the SDK can
-   show the required consent prompt.
+**Ads consent (recommended):** if you'll have EU/UK/other-region users, set up a
+consent form in AdMob (**Privacy & messaging → GDPR / US states**) so the SDK can
+show the required consent prompt.
 
 ---
 
@@ -75,10 +72,10 @@ Open **`app/build.gradle`** → `defaultConfig` (**lines 16–17**):
 
 ```groovy
 versionCode 1          // integer — MUST increase by at least 1 for every Play upload
-versionName "1.0.0"    // user-visible string, e.g. "1.0.0"
+versionName "1.0"      // user-visible string, e.g. "1.0"
 ```
 
-For your very first upload, `versionCode 1` / `versionName "1.0.0"` is fine. On the
+For your very first upload, `versionCode 1` / `versionName "1.0"` is fine. On the
 next update, use `2` / `"1.0.1"`, and so on. **Play rejects an upload whose
 `versionCode` is not higher than the last one.**
 
@@ -97,9 +94,9 @@ folder so it's never committed):
 
 ```bash
 keytool -genkeypair -v \
-  -keystore D:/keys/calcverse-release.jks \
+  -keystore D:/keys/zentical-release.jks \
   -keyalg RSA -keysize 2048 -validity 10000 \
-  -alias calcverse
+  -alias zentical
 ```
 
 It will ask for a **store password**, a **key password**, and your name/org. Write
@@ -111,9 +108,9 @@ Create **`keystore.properties`** in the project root
 (`D:\AI-Projects\Smart-Calculator_Hub\keystore.properties`):
 
 ```properties
-storeFile=D:/keys/calcverse-release.jks
+storeFile=D:/keys/zentical-release.jks
 storePassword=YOUR_STORE_PASSWORD
-keyAlias=calcverse
+keyAlias=zentical
 keyPassword=YOUR_KEY_PASSWORD
 ```
 
@@ -194,7 +191,7 @@ Google requires these before you can publish:
 
 Suggested copy you can reuse:
 
-- **Title:** `Calcverse — All-in-One Calculator`
+- **Title:** `Zentical - All Calculators`
 - **Short description:** `62 calculators — finance, health, dates, units & a scientific calculator. Offline.`
 - **Full description:** describe the 5 categories (Finance, Health, Date & Time,
   Utility, Engineering), the scientific calculator, history/favorites/search,
@@ -219,7 +216,7 @@ referenced from the in-app Settings → Privacy policy screen.
 
 Go to <https://play.google.com/console> → **Create app**.
 
-1. **App details:** name `Calcverse`, default language, type **App**, **Free**.
+1. **App details:** name `Zentical`, default language, type **App**, **Free**.
 2. **Set up your app** checklist — complete each of these:
    - **Privacy policy** → paste your Phase 6 URL.
    - **App access** → "All functionality available without special access" (the app
@@ -227,11 +224,11 @@ Go to <https://play.google.com/console> → **Create app**.
    - **Ads** → **Yes, my app contains ads** (you use AdMob).
    - **Content rating** → fill the questionnaire (this app rates **Everyone**).
    - **Target audience** → 13+ (the privacy policy states no data from under-13s).
-   - **Data safety** → declare what's collected. For Calcverse:
+   - **Data safety** → declare what's collected. For Zentical:
      - Calculation history/favorites/preferences: **stored on device only, not shared** (not "collected" in Play's sense since it never leaves the device).
      - **AdMob** uses a **device/advertising ID** for ads → declare *Device or other IDs → collected → for Advertising*.
      - If you enable Firebase later, also declare analytics/crash data.
-   - **Government apps / Financial features / Health** → answer honestly; Calcverse is
+   - **Government apps / Financial features / Health** → answer honestly; Zentical is
      a general utility, not a regulated financial or medical app.
 
 3. **Store listing** → paste descriptions, upload icon, feature graphic, screenshots
@@ -258,7 +255,7 @@ Go to <https://play.google.com/console> → **Create app**.
    - [ ] Theme switch persists across restart
    - [ ] Widget tiles open the right screens
    - [ ] Airplane mode: everything except ads still works
-   - [ ] Real banner/interstitial ads appear (confirms Phase 2 worked)
+   - [ ] Real banner / interstitial / App Open ads appear (confirms Phase 2 is correct)
 
 ---
 
@@ -277,7 +274,7 @@ Go to <https://play.google.com/console> → **Create app**.
 
 | File | What to change | Phase |
 |---|---|---|
-| `app/build.gradle` (lines 26–29) | Real AdMob app + unit IDs | 2 |
+| `app/build.gradle` (`buildTypes.release`) | AdMob IDs (already set — verify they're yours) | 2 |
 | `app/build.gradle` (lines 16–17) | `versionCode` / `versionName` | 3 |
 | `app/build.gradle` (lines 37–53) | Enable `signingConfigs` + `signingConfig` | 4 |
 | `keystore.properties` (new, project root) | Keystore path + passwords | 4 |
@@ -286,7 +283,8 @@ Go to <https://play.google.com/console> → **Create app**.
 
 ## The 3 things people forget (and get rejected/lose money for)
 
-1. **Shipping Google's TEST ad IDs** → policy strike + $0 revenue. (Phase 2)
+1. **Shipping Google's TEST ad IDs in the release build** → policy strike + $0 revenue.
+   (Already handled: the release build type carries your real IDs; only *debug* uses test IDs. Don't undo that.) (Phase 2)
 2. **No hosted privacy policy URL** → listing can't be submitted. (Phase 6)
 3. **Not testing the R8/minified release build on a device** → app installs from Play
    but crashes on launch. Always test the *release* build, not just debug. (Phase 4c)

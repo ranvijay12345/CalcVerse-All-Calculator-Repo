@@ -1,11 +1,11 @@
-# CalcVerse — Play Store Listing & Upload Guide
+# Zentical — Play Store Listing & Upload Guide
 
 Everything you copy-paste into the Play Console, plus the step-by-step upload walkthrough.
 For the deep build/signing/AdMob mechanics, see **PUBLISHING.md** (this file references it where needed).
 
-- **Package name:** `com.calcverse.app`
-- **In-app display name (launcher):** `CalcVerse` (kept short so it isn't truncated under the icon)
-- **Play Store title (search-facing):** `CalcVerse - All Calculators` (see below)
+- **Package name:** `com.zentical.app`  _(Play Store applicationId and internal Java namespace)_
+- **In-app display name (launcher):** `Zentical` (kept short so it isn't truncated under the icon)
+- **Play Store title (search-facing):** `Zentical - All Calculators` (see below)
 
 ---
 
@@ -13,9 +13,9 @@ For the deep build/signing/AdMob mechanics, see **PUBLISHING.md** (this file ref
 
 ### App title  *(max 30 characters)*
 ```
-CalcVerse - All Calculators
+Zentical - All Calculators
 ```
-> 27 characters ✓. The title is the **single strongest keyword ranking signal** on Play, which is why "Calculators" (the term people actually search) is in it.
+> 26 characters ✓. The title is the **single strongest keyword ranking signal** on Play, which is why "Calculators" (the term people actually search) is in it.
 
 ### Short description  *(max 80 characters — shown in search results & at top of listing)*
 ```
@@ -25,7 +25,7 @@ CalcVerse - All Calculators
 
 ### Full description  *(max 4000 characters — paste as-is)*
 ```
-CalcVerse is the only calculator app you'll ever need — 60+ powerful calculators for finance, health, math, dates and everyday life, all in one clean, fast, ad-light app that works 100% offline.
+Zentical is the only calculator app you'll ever need — 60+ powerful calculators for finance, health, math, dates and everyday life, all in one clean, fast, ad-light app that works 100% offline.
 
 No sign-up. No internet required. No data leaves your phone.
 
@@ -75,7 +75,7 @@ No sign-up. No internet required. No data leaves your phone.
 • Fuel Cost & Mileage
 • Ratio / Aspect Ratio
 
-WHY CALCVERSE?
+WHY ZENTICAL?
 ✓ 100% Offline — every calculation runs on your device
 ✓ Private — no accounts, no tracking of personal data
 ✓ Fast & lightweight — Material Design 3, light & dark themes
@@ -84,9 +84,9 @@ WHY CALCVERSE?
 ✓ Share & Export results as PDF or CSV
 ✓ Home-screen widgets for one-tap access
 
-Whether you're planning a loan EMI, checking your BMI, converting units, splitting a bill, solving a scientific equation or counting down to a big day — CalcVerse does it all, instantly and offline.
+Whether you're planning a loan EMI, checking your BMI, converting units, splitting a bill, solving a scientific equation or counting down to a big day — Zentical does it all, instantly and offline.
 
-Download CalcVerse today and replace a dozen single-purpose calculator apps with one.
+Download Zentical today and replace a dozen single-purpose calculator apps with one.
 ```
 > ~1,950 characters. Naturally repeats the priority keywords (calculator, EMI, BMI, GST, SIP, scientific, converter, offline) without keyword-stuffing, which Play penalizes.
 
@@ -152,14 +152,14 @@ Pick up to 5. Play uses these + your category for browse/related placement.
 | **Tablet screenshots** | optional but recommended (7" & 10") | ⬜ optional |
 | **Promo video (YouTube)** | optional | ⬜ optional |
 
-> Quick way to make the feature graphic: put the CalcVerse icon + tagline "60+ Calculators, All Offline" on a brand-gradient background (matches the app's home header gradient).
+> Quick way to make the feature graphic: put the Zentical icon + tagline "60+ Calculators, All Offline" on a brand-gradient background (matches the app's home header gradient).
 
 ---
 
 ## 5. Step-by-step upload walkthrough
 
 > **Prerequisites (do these first, from PUBLISHING.md):**
-> 1. **Phase 2** — replace AdMob **test** IDs in `app/build.gradle` (lines 26–29) with your **real** IDs. ⚠️ Shipping test ads violates AdMob policy.
+> 1. **Phase 2** — AdMob **real** IDs are already wired into the release build type in `app/build.gradle` (banner, interstitial, App Open). Just confirm they're your IDs and that the AdMob app is linked to `com.zentical.app`.
 > 2. **Phase 3** — create a release **keystore** and wire up `signingConfigs` (uncomment `app/build.gradle` lines 41, 46–53).
 > 3. Bump `versionName`/`versionCode` in `app/build.gradle` (lines 16–17) for every upload.
 
@@ -172,7 +172,7 @@ app/release/app-release.aab
 
 ### Step 2 — Create the app in Play Console
 1. Go to <https://play.google.com/console> → **Create app**.
-2. App name: **`CalcVerse - All Calculators`**  ·  Language: English (US)  ·  Type: **App**  ·  **Free**.
+2. App name: **`Zentical - All Calculators`**  ·  Language: English (US)  ·  Type: **App**  ·  **Free**.
 3. Accept the declarations.
 
 ### Step 3 — Fill "Set up your app" (left nav → *Dashboard*)
@@ -187,13 +187,18 @@ Work through each task Play lists:
 ### Step 4 — Store listing (left nav → *Grow → Store presence → Main store listing*)
 Paste the text from §1 and upload the graphics from §4. Save.
 
+> **Contact details** (further down the same page) are **required**. Use:
+> - **Email:** `ranviapp@gmail.com` (this is public on your listing)
+> - **Website / Phone:** optional — leave blank if you don't have them yet.
+> Use this same email in the Data safety form (§7) and your AdMob account so everything matches.
+
 ### Step 5 — Create a release
 1. Left nav → **Release → Testing → Internal testing** (start here — instant, up to 100 testers).
 2. **Create new release** → upload `app-release.aab`.
 3. If Play offers **Play App Signing**, **accept it** (recommended — Google manages your signing key).
-4. Release name: `1.0.0 (1)`. Release notes:
+4. Release name: `1.0 (1)`. Release notes:
 ```
-First release of CalcVerse — 60+ offline calculators for finance, health, math and everyday life.
+First release of Zentical — 60+ offline calculators for finance, health, math and everyday life.
 ```
 5. **Review release → Start rollout to Internal testing.**
 
@@ -205,12 +210,12 @@ First release of CalcVerse — 60+ offline calculators for finance, health, math
 ---
 
 ## 6. Content rating answers (calculator app)
-Answer the questionnaire honestly; for CalcVerse everything is **No** (no violence, no sexual content, no gambling — note: a *tip/loan calculator is NOT gambling*, answer No). Result: **Everyone**.
+Answer the questionnaire honestly; for Zentical everything is **No** (no violence, no sexual content, no gambling — note: a *tip/loan calculator is NOT gambling*, answer No). Result: **Everyone**.
 
 ---
 
 ## 7. Data safety form (most common rejection point)
-CalcVerse is offline and stores data only locally, but **AdMob collects some data**. Declare accurately:
+Zentical is offline and stores data only locally, but **AdMob collects some data**. Declare accurately:
 
 | Question | Answer |
 |---|---|
@@ -227,9 +232,9 @@ CalcVerse is offline and stores data only locally, but **AdMob collects some dat
 
 ## 8. Pre-flight checklist
 
-- [ ] AdMob **real** IDs in `build.gradle` (not the `3940256099942544` test IDs)
+- [ ] AdMob **real** IDs present in the `release` build type (debug intentionally keeps `3940256099942544` test IDs)
 - [ ] Release keystore created & `signingConfigs` uncommented
-- [ ] `versionCode` = 1, `versionName` = "1.0.0"
+- [ ] `versionCode` = 1, `versionName` = "1.0"
 - [ ] Privacy policy hosted at a **public URL** (host `PRIVACY_POLICY.md` on GitHub Pages / your site) and pasted into Play Console
 - [ ] Feature graphic (1024×500) + at least 2 phone screenshots uploaded
 - [ ] Store title, short & full descriptions pasted (§1)
